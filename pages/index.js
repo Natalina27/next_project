@@ -1,25 +1,35 @@
-import { useEffect } from "react";
-import {pageVerify} from "../helpers/pageVerify";
-import {verifyBrowser} from "../helpers/verifyBrowser";
 import {analyzeCookies} from "../helpers/analyzeCookies";
+import fs from "fs/promises";
 
-export const getServerSideProps = async(context) => {
-     const protectedPage = pageVerify('home');
-        console.log("context", context);
+export const getServerSideProps = async (context) => {
+    console.log("context", context);
+    const { userId } = await analyzeCookies(context);
 
-    const {
-        cookies,
-        isVisitor,
-        isFriend,
-        isFamily
-    } = analyzeCookies(context);
+    const source = await fs.readFile(`./data/users.json`, 'utf-8');
+    const users = JSON.parse(source);
+    const user = users.find((user) => {
+        return user.userId === userId;
+    });
 
-    console.log("cookies", cookies);
+    let isVisitor = false;
+    let isFriend = false;
+    let isFamily = false;
+
+    if (user) {
+        const updatedUser = { ...user, visitCounts: user.visitCounts++ };
+        const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
+        await fs.writeFile(`./data/users.json`, JSON.stringify(updatedUsers, null, 4));
+
+        isVisitor = user.visitCounts < 3;
+        isFriend = user.visitCounts >= 3 && user.visitCounts < 5;
+        isFamily = user.visitCounts >= 5;
+    } else {
+        await fs.writeFile(`./data/users.json`, JSON.stringify([...users, { userId, visitCounts: 1 }], null, 4));
+    }
 
     return {
         props: {
-            protectedPage,
-            cookies,
+            userId,
             isVisitor,
             isFriend,
             isFamily
@@ -32,39 +42,10 @@ const Home = (props) => {
     console.log("props", props);
 
     const {
-        theme,
-        protectedPage,
         isVisitor,
         isFriend,
         isFamily
     } = props;
-
-    // const [isVisitor, setVisitor] = useState(false);
-    // const [isFriend, setFriend] = useState(false);
-    // const [isFamily, setFamily] = useState(false);
-    // const visitCounts = 5;
-
-    useEffect(() =>{
-        console.log('useEffect')
-        // if(visitCounts < 3){
-        //     setVisitor(true);
-        // }
-        // if(visitCounts >= 3 && visitCounts < 5){
-        //     setFriend(true);
-        // }
-        // if(visitCounts >= 5){
-        //     setFamily(true);
-        // }
-        }, []);
-
-    console.log('Home render');
-    const isBrowser = verifyBrowser();
-    if(isBrowser){
-        console.log('width', window.innerWidth);
-    }
-    const protectedPageJSX = protectedPage && (
-        <h2> This page is protected</h2>
-    );
 
     const visitorJSX = isVisitor && (
         <h1>Приветствуем тебя странник!</h1>
@@ -76,14 +57,9 @@ const Home = (props) => {
         <h1>Добро пожаловать в семью!</h1>
     );
 
-
-
-
     return (
         <>
             <h1> Home</h1>
-            {protectedPageJSX}
-            <p>Current Theme = {theme}</p>
             { visitorJSX }
             { friendJSX }
             { familyJSX }

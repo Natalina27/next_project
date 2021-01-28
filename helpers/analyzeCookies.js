@@ -1,27 +1,37 @@
 import nookies from 'nookies';
+import { v4 as uuid } from 'uuid';
 
-export const analyzeCookies = (context) => {
-    const isVisitor = true;
-    const isFriend = true;
-    const isFamily = true;
+export const analyzeCookies = async (context) => {
+    console.log(context);
+    try{
+        // Parse
+        const cookies = nookies.get(context);
+        let userId = uuid();
 
-    // Parse
-    const cookies = nookies.get(context);
+        if (cookies && cookies.userId) {
+            console.log("old user");
+            console.log("cookies", cookies);
+        } else {
+            console.log("new user");
 
-    // Set
-    // nookies.set(context, 'fromGetInitialProps', 'value', {
-    //     maxAge: 30 * 24 * 60 * 60,
-    //     path: '/',
-    // })
+            // Set
+            // 1. context browse ←→ next.js server
+            // 2. userId ← cookie name
+            // 3. value ← cookie value
+            nookies.set(context, "userId", userId, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: "/",
+            });
+        }
 
-    // Destroy
-    //nookies.destroy(context, 'cookieName')
-
-
-    return {
-        cookies,
-      isVisitor,
-      isFriend,
-      isFamily
+        return {
+            userId: cookies.userId || userId,
+        };
     }
- }
+
+
+
+    catch (error) {
+        console.log(error);
+    }
+};
