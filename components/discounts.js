@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const Discounts = () => {
+const Discounts = ({discountsData}) => {
+    const discountsDataJSX = discountsData.map(item => <div>{item.content}{item.dateOfReceiving}</div>);
     return (
         <div>
-            Discounts page
+            <h1>Discounts</h1>
+            {discountsDataJSX}
         </div>
     );
 };

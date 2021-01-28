@@ -1,7 +1,11 @@
-const Cars = () => {
+import React from "react";
+
+const Cars = ({carsData}) => {
+    const carsDataJSX = carsData.map(item => <div>{item.content}{item.dateOfReceiving}</div>);
     return (
         <div>
-           Cars page
+          <h1> Cars page</h1>
+            {carsDataJSX}
         </div>
     );
 };

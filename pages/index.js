@@ -20,9 +20,11 @@ export const getServerSideProps = async (context) => {
         const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
         await fs.writeFile(`./data/users.json`, JSON.stringify(updatedUsers, null, 4));
 
-        isVisitor = user.visitCounts < 3;
-        isFriend = user.visitCounts >= 3 && user.visitCounts < 5;
-        isFamily = user.visitCounts >= 5;
+        const { visitCounts } = user;
+
+        isVisitor = visitCounts < 3;
+        isFriend = visitCounts >= 3 && visitCounts < 5;
+        isFamily = visitCounts >= 5;
     } else {
         await fs.writeFile(`./data/users.json`, JSON.stringify([...users, { userId, visitCounts: 1 }], null, 4));
     }

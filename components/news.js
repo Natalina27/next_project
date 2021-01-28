@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
 
-const News = () => {
+const News = ({newsData}) => {
+    const newsDataJSX = newsData.map(item => <div>{item.content}{item.dateOfReceiving}</div>);
+
     return (
         <div>
-            News page
+            <h1>News</h1>
+            {newsDataJSX}
         </div>
     );
 };
