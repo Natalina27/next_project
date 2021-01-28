@@ -24,6 +24,5 @@ export const analyzeCookies = (context) => {
       isVisitor,
       isFriend,
       isFamily
-
     }
  }

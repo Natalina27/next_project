@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {pageVerify} from "../helpers/pageVerify";
 import {verifyBrowser} from "../helpers/verifyBrowser";
 import {analyzeCookies} from "../helpers/analyzeCookies";
@@ -8,13 +8,21 @@ export const getServerSideProps = async(context) => {
     console.log("context", context);
 
     const {
-        cookies
-    } = analyzeCookies();
+        cookies,
+        isVisitor,
+        isFriend,
+        isFamily
+    } = analyzeCookies(context);
+
+    console.log("cookies", cookies);
 
     return {
         props: {
             protectedPage,
-            cookies
+            cookies,
+            isVisitor,
+            isFriend,
+            isFamily
         }
     }
  }
@@ -25,25 +33,27 @@ const Home = (props) => {
     const {
         theme,
         protectedPage,
-        cookies
+        isVisitor,
+        isFriend,
+        isFamily
     } = props;
 
-    const [isVisitor, setVisitor] = useState(false);
-    const [isFriend, setFriend] = useState(false);
-    const [isFamily, setFamily] = useState(false);
-    const visitCounts = 5;
+    // const [isVisitor, setVisitor] = useState(false);
+    // const [isFriend, setFriend] = useState(false);
+    // const [isFamily, setFamily] = useState(false);
+    // const visitCounts = 5;
 
     useEffect(() =>{
         console.log('useEffect')
-        if(visitCounts < 3){
-            setVisitor(true);
-        }
-        if(visitCounts >= 3 && visitCounts < 5){
-            setFriend(true);
-        }
-        if(visitCounts >= 5){
-            setFamily(true);
-        }
+        // if(visitCounts < 3){
+        //     setVisitor(true);
+        // }
+        // if(visitCounts >= 3 && visitCounts < 5){
+        //     setFriend(true);
+        // }
+        // if(visitCounts >= 5){
+        //     setFamily(true);
+        // }
         }, []);
 
     console.log('Home render');
