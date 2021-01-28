@@ -5,7 +5,7 @@ import {analyzeCookies} from "../helpers/analyzeCookies";
 
 export const getServerSideProps = async(context) => {
      const protectedPage = pageVerify('home');
-    console.log("context", context);
+        console.log("context", context);
 
     const {
         cookies,
@@ -30,6 +30,7 @@ export const getServerSideProps = async(context) => {
 
 const Home = (props) => {
     console.log("props", props);
+
     const {
         theme,
         protectedPage,

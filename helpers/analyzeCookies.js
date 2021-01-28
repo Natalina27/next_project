@@ -7,16 +7,15 @@ export const analyzeCookies = (context) => {
 
     // Parse
     const cookies = nookies.get(context);
-    console.log("cookies", cookies);
 
     // Set
-    nookies.set(context, 'fromGetInitialProps', 'value', {
-        maxAge: 30 * 24 * 60 * 60,
-        path: '/',
-    })
+    // nookies.set(context, 'fromGetInitialProps', 'value', {
+    //     maxAge: 30 * 24 * 60 * 60,
+    //     path: '/',
+    // })
 
     // Destroy
-    nookies.destroy(context, 'cookieName')
+    //nookies.destroy(context, 'cookieName')
 
 
     return {
