@@ -2,7 +2,7 @@ import {analyzeCookies} from "../helpers/analyzeCookies";
 import fs from "fs/promises";
 
 export const getServerSideProps = async (context) => {
-    console.log("context", context);
+
     const { userId } = await analyzeCookies(context);
 
     const source = await fs.readFile(`./data/users.json`, 'utf-8');
@@ -11,7 +11,7 @@ export const getServerSideProps = async (context) => {
         return user.userId === userId;
     });
 
-    let isVisitor = false;
+    let isVisitor = true;
     let isFriend = false;
     let isFamily = false;
 
@@ -39,8 +39,6 @@ export const getServerSideProps = async (context) => {
 
 
 const Home = (props) => {
-    console.log("props", props);
-
     const {
         isVisitor,
         isFriend,

@@ -2,7 +2,7 @@ import nookies from 'nookies';
 import { v4 as uuid } from 'uuid';
 
 export const analyzeCookies = async (context) => {
-    console.log(context);
+
     try{
         // Parse
         const cookies = nookies.get(context);
@@ -28,9 +28,6 @@ export const analyzeCookies = async (context) => {
             userId: cookies.userId || userId,
         };
     }
-
-
-
     catch (error) {
         console.log(error);
     }

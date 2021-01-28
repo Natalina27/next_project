@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "userId": "bda1d400-fdf2-44c2-bf1d-993d0ec84175",
+        "visitCounts": 5
+    },
+    {
+        "userId": "713d514e-bc3c-4a6d-bc87-04eff1ad7bb7",
+        "visitCounts": 7
+    },
+    {
+        "userId": "ec43b08f-9acb-4d58-afb6-b84b739a49a9",
+        "visitCounts": 5
+    },
+    {
+        "userId": "bc5df0b7-76bb-4936-b12d-f2fc3c367de9",
+        "visitCounts": 4
+    },
+    {
+        "userId": "2f8ecc48-bb3a-4de6-95d2-dbb86b3ea50f",
+        "visitCounts": 5
+    },
+    {
+        "userId": "4e313fe1-72f1-4150-8088-2cf08073281b",
+        "visitCounts": 1
+    }
+]
