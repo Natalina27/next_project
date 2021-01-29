@@ -5,6 +5,7 @@ import Discounts from "../components/discounts";
 import Cars from "../components/cars";
 import {readFromData} from "../helpers/readFromData";
 import {writeIntoData} from "../helpers/writeIntoData";
+import {countVisitors} from "../helpers/countVisitors";
 
 export const getServerSideProps = async (context) => {
 
@@ -16,18 +17,11 @@ export const getServerSideProps = async (context) => {
        return user.userId === userId;
      });
 
-
-    let isVisitor = false;
-    let isFriend = false;
-    let isFamily = false;
-    let str = "";
+    let isVisitor, isFriend, isFamily, str = "";
 
     if (user) {
         const { visitCounts } = user;
-
-        isVisitor = visitCounts < 3;
-        isFriend = visitCounts >= 3 && visitCounts < 5;
-        isFamily = visitCounts >= 5;
+        [isVisitor, isFriend, isFamily] = countVisitors(visitCounts);
 
     } else {
          str = "There is no any user";

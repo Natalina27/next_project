@@ -1,12 +1,6 @@
-export const countVisitors = user => {
-    const { visitCounts } = user;
-    let isVisitor;
-    let isFriend;
-    let isFamily;
-
-    isVisitor = visitCounts < 3;
-    isFriend = visitCounts >= 3 && visitCounts < 5;
-    isFamily = visitCounts >= 5;
-
-    return {isVisitor, isFriend, isFamily};
+export const countVisitors = (visits) => {
+    const isVisitor = visits < 3;
+    const isFriend = visits >= 3 && visits < 5;
+    const isFamily = visits >= 5;
+    return [isVisitor, isFriend, isFamily];
 }

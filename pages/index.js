@@ -1,32 +1,30 @@
 import {analyzeCookies} from "../helpers/analyzeCookies";
-import fs from "fs/promises";
+import {readFromData} from "../helpers/readFromData";
+import {writeIntoData} from "../helpers/writeIntoData";
+import {countVisitors} from "../helpers/countVisitors";
 
 export const getServerSideProps = async (context) => {
 
     const { userId } = await analyzeCookies(context);
 
-    const source = await fs.readFile(`./data/users.json`, 'utf-8');
+    const source = await readFromData(`./data/users.json`);
     const users = JSON.parse(source);
     const user = users.find((user) => {
         return user.userId === userId;
     });
 
-    let isVisitor = true;
-    let isFriend = false;
-    let isFamily = false;
+    let isVisitor, isFriend , isFamily;
 
     if (user) {
         const updatedUser = { ...user, visitCounts: user.visitCounts++ };
         const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
-        await fs.writeFile(`./data/users.json`, JSON.stringify(updatedUsers, null, 4));
+        await writeIntoData(updatedUsers, `./data/news.json`);
 
         const { visitCounts } = user;
+        [isVisitor, isFriend, isFamily] = countVisitors(visitCounts);
 
-        isVisitor = visitCounts < 3;
-        isFriend = visitCounts >= 3 && visitCounts < 5;
-        isFamily = visitCounts >= 5;
     } else {
-        await fs.writeFile(`./data/users.json`, JSON.stringify([...users, { userId, visitCounts: 1 }], null, 4));
+        await writeIntoData([...users, { userId, visitCounts: 1 }], `./data/news.json`);
     }
 
     return {
