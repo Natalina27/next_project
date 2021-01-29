@@ -1,15 +1,16 @@
 import React from "react";
-import fs from "fs/promises";
 import {analyzeCookies} from "../helpers/analyzeCookies";
 import News from "../components/news";
 import Discounts from "../components/discounts";
 import Cars from "../components/cars";
+import {readFromData} from "../helpers/readFromData";
+import {writeIntoData} from "../helpers/writeIntoData";
 
 export const getServerSideProps = async (context) => {
 
     const { userId } = await analyzeCookies(context);
 
-    const source = await fs.readFile(`./data/users.json`, 'utf-8');
+    const source = await readFromData(`./data/users.json`);
     const users = JSON.parse(source);
     const user = users.find((user) => {
        return user.userId === userId;
@@ -31,17 +32,20 @@ export const getServerSideProps = async (context) => {
     } else {
          str = "There is no any user";
     }
-    //news
-    const newsSource = await fs.readFile(`./data/news.json`, 'utf-8');
-    const newsData = JSON.parse(newsSource);
+     //news
+     const newsSource = await readFromData(`./data/news.json`);
+     const newsData =  JSON.parse(newsSource);
+     await writeIntoData(newsData, `./data/news.json`);
 
-    //discounts
-    const newsDiscounts = await fs.readFile(`./data/discounts.json`, 'utf-8');
-    const discountsData = JSON.parse(newsDiscounts);
+     //discounts
+    const discountSource = await readFromData(`./data/discounts.json`);
+    const discountsData =  JSON.parse(discountSource);
+    await writeIntoData(discountsData, `./data/discounts.json`);
 
     //cars
-    const carsSource = await fs.readFile(`./data/cars.json`, 'utf-8');
-    const carsData = JSON.parse(carsSource);
+    const carsSource = await readFromData(`./data/cars.json`);
+    const carsData =  JSON.parse(carsSource);
+    await writeIntoData(carsData, `./data/cars.json`);
 
     return {
         props: {
