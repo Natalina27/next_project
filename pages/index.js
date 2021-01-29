@@ -1,7 +1,8 @@
 import {analyzeCookies} from "../helpers/analyzeCookies";
 import {readFromData} from "../helpers/readFromData";
-import {writeIntoData} from "../helpers/writeIntoData";
 import {countVisitors} from "../helpers/countVisitors";
+import fs from "fs/promises";
+
 
 export const getServerSideProps = async (context) => {
 
@@ -18,13 +19,13 @@ export const getServerSideProps = async (context) => {
     if (user) {
         const updatedUser = { ...user, visitCounts: user.visitCounts++ };
         const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
-        await writeIntoData(updatedUsers, `./data/news.json`);
+        await fs.writeFile(`./data/users.json`, JSON.stringify(updatedUsers, null, 4));
 
         const { visitCounts } = user;
         [isVisitor, isFriend, isFamily] = countVisitors(visitCounts);
 
     } else {
-        await writeIntoData([...users, { userId, visitCounts: 1 }], `./data/news.json`);
+        await fs.writeFile(`./data/users.json`, JSON.stringify([...users, { userId, visitCounts: 1 }], null, 4));
     }
 
     return {
