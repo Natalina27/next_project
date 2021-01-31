@@ -14,7 +14,9 @@ export const getServerSideProps = async (context) => {
         return user.userId === userId;
     });
 
-    let isVisitor, isFriend , isFamily;
+    let isVisitor = true;
+    let isFriend  = false;
+    let isFamily = false;
 
     if (user) {
         const updatedUser = { ...user, visitCounts: user.visitCounts++ };
