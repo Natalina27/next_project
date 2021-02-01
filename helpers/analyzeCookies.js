@@ -6,6 +6,7 @@ export const analyzeCookies = async (context) => {
     try{
         // Parse
         const cookies = nookies.get(context);
+        //const user = 'user' in cookies ? cookies.user : null;
         let userId = uuid();
 
         if (cookies && cookies.userId) {
@@ -13,7 +14,6 @@ export const analyzeCookies = async (context) => {
             console.log("cookies", cookies);
         } else {
             console.log("new user");
-
             // Set
             // 1. context browse ←→ next.js server
             // 2. userId ← cookie name
