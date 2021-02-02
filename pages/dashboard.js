@@ -1,14 +1,38 @@
+//Core
 import React from "react";
-import {analyzeCookies} from "../helpers/analyzeCookies";
-import News from "../components/news";
-import Discounts from "../components/discounts";
-import Cars from "../components/cars";
-import {readFromData} from "../helpers/readFromData";
-import {writeIntoData} from "../helpers/writeIntoData";
-import {countVisitors} from "../helpers/countVisitors";
+//Components
+import { News } from "../components/news";
+import { Discounts } from "../components/discounts";
+import { Cars } from "../components/cars";
+import { Menu } from "../components/Menu/menu";
+
+//Other
+import { analyzeCookies } from "../helpers/analyzeCookies";
+import { readFromData } from "../helpers/readFromData";
+import { writeIntoData } from "../helpers/writeIntoData";
+import { defineVisitorsType } from "../helpers/defineVisitorsType";
+import { initialDispatcher } from "../init/initialDispatcher";
+import { initializeStore } from "../init/store";
+import { userActions } from "../bus/user/actions";
 
 export const getServerSideProps = async (context) => {
+    //redux
+    const store = await initialDispatcher(context, initializeStore());
 
+    store.dispatch(
+        userActions.fillUser({
+            userId: 'UserId from Home page',
+        }),
+        userActions.setVisitCounts({
+            visitCounts: 3
+        }),
+        userActions.setUserType({
+            userType: 'dipende'
+        })
+    );
+    const initialReduxState = store.getState();
+
+    //cookies
     const { userId } = await analyzeCookies(context);
 
     const source = await readFromData(`./data/users.json`);
@@ -17,11 +41,11 @@ export const getServerSideProps = async (context) => {
        return user.userId === userId;
      });
 
-    let isVisitor, isFriend, isFamily, str = "";
+    let isVisitor = false, isFriend = false, isFamily = false, str = "";
 
     if (user) {
         const { visitCounts } = user;
-        [isVisitor, isFriend, isFamily] = countVisitors(visitCounts);
+        [isVisitor, isFriend, isFamily] = defineVisitorsType(visitCounts);
 
     } else {
          str = "There is no any user";
@@ -49,13 +73,13 @@ export const getServerSideProps = async (context) => {
             str,
             newsData,
             discountsData,
-            carsData
+            carsData,
+            initialReduxState
         }
     }
 }
 
-
-const Dashboard = (props) => {
+const DashboardPage = (props) => {
     const {
         isVisitor,
         isFriend,
@@ -63,7 +87,8 @@ const Dashboard = (props) => {
         str,
         newsData,
         discountsData,
-        carsData
+        carsData,
+        initialReduxState,
     } = props;
 
     const visitorJSX = isVisitor && (
@@ -84,8 +109,11 @@ const Dashboard = (props) => {
         </>
     );
 
+    console.log('initialReduxState', initialReduxState);
+
     return (
         <div>
+            <Menu />
             { visitorJSX }
             { friendJSX }
             { familyJSX }
@@ -94,4 +122,4 @@ const Dashboard = (props) => {
     );
 };
 
-export default Dashboard;
+export default DashboardPage;

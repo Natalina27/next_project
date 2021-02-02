@@ -1,0 +1,10 @@
+.menu{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.link{
+    text-decoration: none;
+    color: dimgray;
+    font-size: 27px;
+}
