@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Cars = ({carsData}) => {
-    console.log('Cars Component');
     const carsDataJSX = carsData.map(item => <li key={item.id}>{item.content}{item.dateOfReceiving}</li>);
     return (
         <div>

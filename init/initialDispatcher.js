@@ -18,7 +18,7 @@ export const initialDispatcher = async (
     const  userType  = defineUserType(visitCounts);
 
     store.dispatch(
-        userActions.fillUser({userId}),
+        userActions.fillUser(userId),
         userActions.setVisitCounts(visitCounts),
         userActions.setUserType(userType)
     );

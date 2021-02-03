@@ -5,28 +5,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userActions } from "../bus/user/actions";
 
 export const User = () => {
-    console.log('User Component');
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state);
-    console.log('User from useSelector', user);
 
-    const userType =  (user.userType === 'Guest' ? 'Friend' : 'familyMember');
+    const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
 
     const upgradeStatus = () => {
-        dispatch(userActions.fillUser({userType}));
+        dispatch(userActions.setUserType(userType));
     };
 
-    const userIdJSX = user && (
-        <p>UserId: {user.userId}</p>
-    );
+    const userIdJSX = user && <p>UserId: {user.userId}</p>;
 
-    const userTypeJSX = user && (
-        <p>Welcome, {user.userType}</p>
-    );
+    const userTypeJSX = user && <p>Welcome, {user.userType}</p>;
 
-    const viewsJSX = user && (
-        <p>Views: {user.visitCounts}</p>
-    );
+    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (
         <>

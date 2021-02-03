@@ -6,9 +6,6 @@ import Link from "next/link";
 import Styles from './styles.module.css';
 
 export const Menu = () => {
-    console.log('==============');
-    console.log('Menu Component');
-
     return (
         <div className={Styles.menu}>
             <nav>

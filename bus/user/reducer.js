@@ -8,15 +8,17 @@ const initialState = {
 
 export const userReducer = (
     state = initialState,
-    { type, payload }
+    action
 ) => {
+    const { type, payload } = action;
+
     switch (type) {
         case types.FILL_USER:
-            return {...state, ...payload};
+            return { ...state, userId: payload };
         case types.SET_VISIT_COUNTS:
-            return {...state, visitCounts: 0};
+            return { ...state, visitCounts: payload };
         case types.SET_USER_TYPE:
-            return {...state, userType: 'Guest'};
+            return { ...state, userType: payload };
         default:
             return state;
     }

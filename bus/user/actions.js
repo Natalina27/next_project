@@ -1,21 +1,22 @@
 import { types } from "./types";
 
-export const userActions = {
-    fillUser: (user) => {
+export const userActions = Object.freeze({
+    fillUser: (userId) => {
         return {
             type: types.FILL_USER,
-            payload: user,
+            payload: userId,
         }
     },
-    setVisitCounts: () => {
+    setVisitCounts: (visitsCount) => {
         return {
             type: types.SET_VISIT_COUNTS,
+            payload: visitsCount
         }
     },
-    setUserType: () => {
+    setUserType: (userType) => {
         return {
             type: types.SET_USER_TYPE,
+            payload: userType
         }
     },
-
-};
+});

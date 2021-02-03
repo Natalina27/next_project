@@ -5,16 +5,10 @@ import { useSelector} from 'react-redux';
 import {defineUserType} from "../helpers/defineUserType";
 
 export const Message = () => {
-    console.log('==============');
-    console.log('Message Component');
 
     const { user } = useSelector((state) => state);
-    console.log('User from useSelector', user);
-
     const { visitCounts } = user;
-
     const userType = defineUserType(visitCounts);
-
 
     const isVisitor = userType === 'Guest';
     const isFriend = userType === 'Friend';
@@ -29,7 +23,6 @@ export const Message = () => {
     const familyJSX = isFamily && (
         <h1>Добро пожаловать в семью!</h1>
     );
-
 
     return (
         <div>
