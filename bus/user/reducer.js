@@ -14,9 +14,9 @@ export const userReducer = (
         case types.FILL_USER:
             return {...state, ...payload};
         case types.SET_VISIT_COUNTS:
-            return {...state};
+            return {...state, visitCounts: 0};
         case types.SET_USER_TYPE:
-            return {...state};
+            return {...state, userType: 'Guest'};
         default:
             return state;
     }

@@ -1,14 +1,12 @@
 import {userActions} from "../bus/user/actions";
 import {analyzeCookies} from "../helpers/analyzeCookies";
 import {readFromData} from "../helpers/readFromData";
+import {defineUserType} from "../helpers/defineUserType";
 
 export const initialDispatcher = async (
     context,
     store,
 ) => {
-
-    let isVisitor = true;
-    let isFriend  = false;
 
     const { userId } = await analyzeCookies(context);
     const source = await readFromData(`./data/users.json`);
@@ -17,7 +15,7 @@ export const initialDispatcher = async (
         return user.userId === userId;
     });
     const { visitCounts } = user || 1;
-    const  userType  = isVisitor ? 'Guest': isFriend ? 'Friend' : 'familyMember';
+    const  userType  = defineUserType(visitCounts);
 
     store.dispatch(
         userActions.fillUser({userId}),

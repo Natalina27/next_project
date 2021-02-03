@@ -10,29 +10,15 @@ import { Menu } from "../components/Menu/menu";
 import { analyzeCookies } from "../helpers/analyzeCookies";
 import { readFromData } from "../helpers/readFromData";
 import { writeIntoData } from "../helpers/writeIntoData";
-import { defineVisitorsType } from "../helpers/defineVisitorsType";
+import { defineUserType } from "../helpers/defineUserType";
 import { initialDispatcher } from "../init/initialDispatcher";
 import { initializeStore } from "../init/store";
 import { userActions } from "../bus/user/actions";
+import {useDispatch} from "react-redux";
 
 export const getServerSideProps = async (context) => {
-    //redux
     const store = await initialDispatcher(context, initializeStore());
 
-    store.dispatch(
-        userActions.fillUser({
-            userId: 'UserId from Home page',
-        }),
-        userActions.setVisitCounts({
-            visitCounts: 3
-        }),
-        userActions.setUserType({
-            userType: 'dipende'
-        })
-    );
-    const initialReduxState = store.getState();
-
-    //cookies
     const { userId } = await analyzeCookies(context);
 
     const source = await readFromData(`./data/users.json`);
@@ -41,11 +27,18 @@ export const getServerSideProps = async (context) => {
        return user.userId === userId;
      });
 
-    let isVisitor = false, isFriend = false, isFamily = false, str = "";
-
+    let str = "";
+    let userType = '';
     if (user) {
         const { visitCounts } = user;
-        [isVisitor, isFriend, isFamily] = defineVisitorsType(visitCounts);
+
+        userType = defineUserType(visitCounts);
+        console.log('userType', userType);
+        store.dispatch(
+            userActions.fillUser({userId}),
+            userActions.setVisitCounts(visitCounts),
+            userActions.setUserType(userType)
+        );
 
     } else {
          str = "There is no any user";
@@ -65,12 +58,12 @@ export const getServerSideProps = async (context) => {
     const carsData =  JSON.parse(carsSource);
     await writeIntoData(carsData, `./data/cars.json`);
 
+    const initialReduxState = store.getState();
+
     return {
         props: {
-            isVisitor,
-            isFriend,
-            isFamily,
             str,
+            userType,
             newsData,
             discountsData,
             carsData,
@@ -80,36 +73,42 @@ export const getServerSideProps = async (context) => {
 }
 
 const DashboardPage = (props) => {
+    console.log('==============');
+
     const {
-        isVisitor,
-        isFriend,
-        isFamily,
-        str,
+         str,
+        userType,
         newsData,
         discountsData,
         carsData,
         initialReduxState,
     } = props;
+    const isVisitor = userType === 'Guest';
+    const isFriend = userType === 'Friend';
+    const isFamily = userType === 'familyMember';
 
     const visitorJSX = isVisitor && (
         <News newsData={newsData}/>
     );
     const friendJSX = isFriend && (
-       <>
-           <News newsData={newsData}/>
-           <Discounts discountsData={discountsData}/>
-       </>
+        <>
+            <News newsData={newsData}/>
+            <Discounts discountsData={discountsData}/>
+        </>
     );
     const familyJSX = isFamily && (
         <>
             <News newsData={newsData}/>
             <Discounts discountsData={discountsData}/>
             <Cars carsData={carsData}/>
-
         </>
     );
 
     console.log('initialReduxState', initialReduxState);
+
+    const initialViewsPage = initialReduxState.user;
+    const dispatch = useDispatch();
+    dispatch(userActions.fillUser({user: initialViewsPage }));
 
     return (
         <div>

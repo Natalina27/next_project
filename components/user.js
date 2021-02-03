@@ -10,11 +10,10 @@ export const User = () => {
     const { user } = useSelector((state) => state);
     console.log('User from useSelector', user);
 
+    const userType =  (user.userType === 'Guest' ? 'Friend' : 'familyMember');
+
     const upgradeStatus = () => {
-        dispatch(userActions.setUserType(
-             user.userType =
-                 user.userType === 'Guest' ? 'Friend' : 'familyMember'
-        ));
+        dispatch(userActions.fillUser({userType}));
     };
 
     const userIdJSX = user && (

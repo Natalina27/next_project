@@ -1,22 +1,24 @@
+//Core
+import {useDispatch} from "react-redux";
+
 //Components
 import { Menu } from "../components/Menu/menu";
+
+//Actions
+import { userActions } from "../bus/user/actions";
 
 //Other
 import { analyzeCookies } from "../helpers/analyzeCookies";
 import { readFromData } from "../helpers/readFromData";
-import { defineVisitorsType } from "../helpers/defineVisitorsType";
+import { defineUserType } from "../helpers/defineUserType";
 import fs from "fs/promises";
 import { initialDispatcher } from "../init/initialDispatcher";
 import { initializeStore } from "../init/store";
-import { useSelector } from "react-redux";
-import { userActions } from "../bus/user/actions";
+import {Message} from "../components/message";
 
 export const getServerSideProps = async (context) => {
-    //redux
     const store = await initialDispatcher(context, initializeStore());
-    const initialReduxState = store.getState();
 
-    //cookies
     const { userId } = await analyzeCookies(context);
 
     const source = await readFromData(`./data/users.json`);
@@ -25,81 +27,58 @@ export const getServerSideProps = async (context) => {
         return user.userId === userId;
     });
 
-    let visitCounts  = 0;
-    let userType = 'Guest';
-    let isVisitor = true;
-    let isFriend  = false;
-    let isFamily = false;
+    let userType = '';
 
     if (user) {
         const updatedUser = { ...user, visitCounts: user.visitCounts++ };
         const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
         await fs.writeFile(`./data/users.json`, JSON.stringify(updatedUsers, null, 4));
 
-        visitCounts = user.visitCounts;
-        [isVisitor, isFriend, isFamily] = defineVisitorsType(visitCounts);
-        console.log(isVisitor, isFriend, isFamily);
-        userType = isVisitor ? 'Guest': isFriend ? 'Friend' : 'familyMember';
-        console.log('userType', userType);
+        const { visitCounts } = user;
+
+        userType = defineUserType(visitCounts);
 
         store.dispatch(
-            userActions.fillUser({userId}),
-            userActions.setVisitCounts({visitCounts}),
-            userActions.setUserType({userType})
+            userActions.fillUser({
+                userId,
+                visitCounts,
+                userType
+            }),
         );
-
     } else {
         await fs.writeFile(`./data/users.json`, JSON.stringify([...users, { userId, visitCounts: 1 }], null, 4));
     }
+    const initialReduxState = store.getState();
 
     return {
         props: {
             userId,
-            visitCounts,
             userType,
-            isVisitor,
-            isFriend,
-            isFamily,
             initialReduxState,
         }
     }
  }
 
 const HomePage = (props) => {
+    console.log('==============');
     console.log('Home page');
 
     const {
-        userType,
         initialReduxState
     } = props;
 
-    const { user } = useSelector((state) => state);
-
-    console.log('user', user);
-    console.log('userType', userType);
-
-    const isVisitor = userType === 'Guest';
-    const isFriend = userType === 'Friend';
-    const isFamily = userType === 'familyMember';
-
-    const visitorJSX = isVisitor && (
-        <h1>Приветствуем тебя странник!</h1>
-    );
-    const friendJSX = isFriend && (
-        <h1>Приветствуем тебя друг!</h1>
-    );
-    const familyJSX = isFamily && (
-        <h1>Добро пожаловать в семью!</h1>
-    );
     console.log('initialReduxState', initialReduxState);
+    const initialViewsPage = initialReduxState.user;
+    const dispatch = useDispatch();
+    dispatch(userActions.fillUser({
+        user: initialViewsPage
+    }));
 
     return (
         <>
             <Menu />
             <h1> Home</h1>
-            { visitorJSX }
-            { friendJSX }
-            { familyJSX }
+            <Message />
         </>
     );
 };
