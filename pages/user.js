@@ -11,6 +11,7 @@ import {initializeStore} from "../init/store";
 import {readFromData} from "../helpers/readFromData";
 import {defineUserType} from "../helpers/defineUserType";
 import {analyzeCookies} from "../helpers/analyzeCookies";
+import {writeIntoUsersData} from "../helpers/writeIntoUserData";
 
 export const getServerSideProps = async (context) => {
     //redux
@@ -36,8 +37,11 @@ export const getServerSideProps = async (context) => {
             }
         }
     }
+    const updatedUser = { ...user, visitCounts: user.visitCounts++ };
+    const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
+    await writeIntoUsersData('./data/users.json', updatedUsers);
 
-    const {visitCounts} = user;
+    const {visitCounts} = updatedUser;
     const userType = defineUserType(visitCounts);
 
     store.dispatch(userActions.fillUser(userId));

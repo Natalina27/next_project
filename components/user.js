@@ -8,9 +8,10 @@ export const User = () => {
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state);
 
-    const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
+
 
     const upgradeStatus = () => {
+        const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
         dispatch(userActions.setUserType(userType));
     };
 
