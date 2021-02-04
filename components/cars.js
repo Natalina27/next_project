@@ -1,6 +1,6 @@
 import React from "react";
 
-const Cars = ({carsData}) => {
+export const Cars = ({carsData}) => {
     const carsDataJSX = carsData.map(item => <li key={item.id}>{item.content}{item.dateOfReceiving}</li>);
     return (
         <div>
@@ -9,5 +9,3 @@ const Cars = ({carsData}) => {
         </div>
     );
 };
-
-export default Cars;
