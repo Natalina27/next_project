@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import moment from "moment";
 
-export const writeIntoData = (data, path) => {
+export const writeIntoData = (path, data) => {
         const updatedData = data.map((item) => {
             item.dateOfReceiving = moment().format("MMM Do YYYY");
             return item;
