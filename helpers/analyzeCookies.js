@@ -6,12 +6,11 @@ export const analyzeCookies = async (context) => {
     try{
         // Parse
         const cookies = nookies.get(context);
-        const user = 'user' in cookies ? cookies.user : null;
-        let userId = uuid();
+        let userId = 'userId' in cookies ? cookies.userId : uuid();
 
         if (cookies && cookies.userId) {
             console.log("old user");
-            console.log("user", user);
+            console.log("user", userId);
             console.log("cookies", cookies);
         } else {
             console.log("new user");

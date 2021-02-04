@@ -22,6 +22,12 @@ export const getServerSideProps = async (context) => {
         return user.userId === userId;
     });
 
+    //redirect
+    if(!user){
+        context.res.writeHead(301, {Location: '/'});
+        context.res.end();
+    }
+
     const {visitCounts} = user;
     const userType = defineUserType(visitCounts);
 

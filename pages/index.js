@@ -1,5 +1,5 @@
 //Core
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 //Components
 import { Menu } from "../components/Menu/menu";
@@ -65,11 +65,16 @@ const HomePage = (props) => {
     dispatch(userActions.setVisitCounts(initialViewsPage.visitCounts));
     dispatch(userActions.setUserType(initialViewsPage.userType));
 
+    //views
+    const { user } = useSelector((state) => state);
+    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
+
     return (
         <>
             <Menu />
             <h1> Home</h1>
             <Message />
+            {viewsJSX}
         </>
     );
 };

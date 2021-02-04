@@ -1,6 +1,6 @@
 //Core
 import React from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 //Components
 import { News } from "../components/news";
@@ -109,6 +109,10 @@ const DashboardPage = (props) => {
     const dispatch = useDispatch();
     dispatch(userActions.fillUser(initialViewsPage.userId));
 
+    //views
+    const { user } = useSelector((state) => state);
+    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
+
     return (
         <div>
             <Menu />
@@ -116,6 +120,7 @@ const DashboardPage = (props) => {
             { friendJSX }
             { familyJSX }
             {str}
+            {viewsJSX}
         </div>
     );
 };
