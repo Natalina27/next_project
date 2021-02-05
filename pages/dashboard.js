@@ -1,6 +1,5 @@
 //Core
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
 
 //Components
 import {News} from "../components/news";
@@ -19,6 +18,7 @@ import {defineUserType} from "../helpers/defineUserType";
 import {initialDispatcher} from "../init/initialDispatcher";
 import {initializeStore} from "../init/store";
 import {countUserVisits} from "../helpers/countUserVisits";
+import {getUserFromSelector} from "../helpers/getUserFromSelector";
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
@@ -75,14 +75,8 @@ const DashboardPage = (props) => {
         initialReduxState
     } = props;
 
-    const initialViewsPage = initialReduxState.user;
-    const dispatch = useDispatch();
+    const user = getUserFromSelector(initialReduxState);
 
-    dispatch(userActions.fillUser(initialViewsPage.userId));
-    dispatch(userActions.setVisitCounts(initialViewsPage.visitCounts));
-    dispatch(userActions.setUserType(initialViewsPage.userType));
-
-    const {user} = useSelector((state) => state);
     const userType = user.userType;
     const isVisitor = userType === 'Guest';
     const isFriend = userType === 'Friend';

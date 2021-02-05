@@ -1,15 +1,10 @@
-//Core
-import {useDispatch, useSelector} from "react-redux";
-
 //Components
 import {Menu} from "../components/Menu/menu";
 import {Message} from "../components/message";
 
-//Actions
-import {userActions} from "../bus/user/actions";
-
 //Other
 import {getInitialReduxState} from "../helpers/getInitialReduxstate";
+import {getUserFromSelector} from "../helpers/getUserFromSelector";
 
 export const getServerSideProps = async (context) => {
 
@@ -27,14 +22,7 @@ const HomePage = (props) => {
         initialReduxState
     } = props;
 
-    const initialViewsPage = initialReduxState.user;
-    const dispatch = useDispatch();
-    dispatch(userActions.fillUser(initialViewsPage.userId));
-    dispatch(userActions.setVisitCounts(initialViewsPage.visitCounts));
-    dispatch(userActions.setUserType(initialViewsPage.userType));
-
-    //views
-    const {user} = useSelector((state) => state);
+    const user = getUserFromSelector(initialReduxState);
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (

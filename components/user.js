@@ -1,20 +1,15 @@
 // Core
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // Actions
 import { userActions } from "../bus/user/actions";
+import {getUserFromSelector} from "../helpers/getUserFromSelector";
 
 export const User = ({initialReduxState}) => {
-    const initialViewsPage = initialReduxState.user;
-    const dispatch = useDispatch();
-
-    dispatch(userActions.fillUser(initialViewsPage.userId));
-    dispatch(userActions.setVisitCounts(initialViewsPage.visitCounts));
-    dispatch(userActions.setUserType(initialViewsPage.userType));
-
-    const { user } = useSelector((state) => state);
+    const user = getUserFromSelector(initialReduxState);
 
     const upgradeStatus = () => {
+        const dispatch = useDispatch();
         const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
         dispatch(userActions.setUserType(userType));
     };
