@@ -76,6 +76,7 @@ const DashboardPage = (props) => {
     } = props;
 
     const user = getUserFromSelector(initialReduxState);
+    console.log(user);
 
     const userType = user.userType;
     const isVisitor = userType === 'Guest';

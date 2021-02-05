@@ -7,12 +7,13 @@ import {getUserFromSelector} from "../helpers/getUserFromSelector";
 
 export const User = ({initialReduxState}) => {
     const user = getUserFromSelector(initialReduxState);
+    const dispatch = useDispatch();
 
+    const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
     const upgradeStatus = () => {
-        const dispatch = useDispatch();
-        const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
         dispatch(userActions.setUserType(userType));
     };
+
 
     const userIdJSX = user && <p>UserId: {user.userId}</p>;
 
@@ -22,7 +23,7 @@ export const User = ({initialReduxState}) => {
 
     return (
         <>
-            <button onClick={upgradeStatus}>Временно повысить свой статус</button>
+            <button onClick={ upgradeStatus }>Временно повысить свой статус</button>
             {userIdJSX}
             {userTypeJSX}
             {viewsJSX}

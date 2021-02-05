@@ -9,6 +9,7 @@ import {getUserFromSelector} from "../helpers/getUserFromSelector";
 export const getServerSideProps = async (context) => {
 
     const initialReduxState = await getInitialReduxState(context);
+    console.log('initialReduxState', initialReduxState);
 
     return {
         props: {
@@ -23,6 +24,7 @@ const HomePage = (props) => {
     } = props;
 
     const user = getUserFromSelector(initialReduxState);
+    console.log(' index user', user);
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (

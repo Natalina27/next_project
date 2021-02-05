@@ -9,7 +9,6 @@ export const getInitialReduxState  = async(context) => {
 
     const store = await initialDispatcher(context, initializeStore());
     const {userId} = await analyzeCookies(context);
-
     const visitCounts = await countUserVisits(userId);
     const userType = defineUserType(visitCounts);
 
