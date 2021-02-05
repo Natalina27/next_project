@@ -2,67 +2,26 @@
 import {User} from "../components/user";
 import {Menu} from "../components/Menu/menu";
 
-//Actions
-import {userActions} from "../bus/user/actions";
-
 //Other
-import {initialDispatcher} from "../init/initialDispatcher";
-import {initializeStore} from "../init/store";
-import {readFromData} from "../helpers/readFromData";
-import {defineUserType} from "../helpers/defineUserType";
-import {analyzeCookies} from "../helpers/analyzeCookies";
-import {writeIntoUsersData} from "../helpers/writeIntoUserData";
+import {getInitialReduxState} from "../helpers/getInitialReduxstate";
 
 export const getServerSideProps = async (context) => {
-    //redux
-    const store = await initialDispatcher(context, initializeStore());
-    const {userId} = await analyzeCookies(context);
-    const source = await readFromData(`./data/users.json`);
-    const users = JSON.parse(source);
-    const user = users.find((user) => {
-        return user.userId === userId;
-    });
 
-    //redirect1
-    /*if(!user){
-        context.res.writeHead(301, {Location: '/'});
-        context.res.end();
-    }*/
+   const initialReduxState = await getInitialReduxState(context);
 
-    //redirect2
-    if(!user){
-        return {
-            redirect: {
-                destination: '/',
-            }
-        }
-    }
-    const updatedUser = { ...user, visitCounts: user.visitCounts++ };
-    const updatedUsers = users.map((user) => user.id === userId ? updatedUser : user);
-    await writeIntoUsersData('./data/users.json', updatedUsers);
-
-    const {visitCounts} = updatedUser;
-    const userType = defineUserType(visitCounts);
-
-    store.dispatch(userActions.fillUser(userId));
-    store.dispatch(userActions.setVisitCounts(visitCounts));
-    store.dispatch(userActions.setUserType(userType));
-
-    const initialReduxState = store.getState();
-
-    return {
+   return {
         props: {
             initialReduxState,
         }
     }
 }
 
-const UserPage = () => {
+const UserPage = ({initialReduxState}) => {
     return (
         <>
             <Menu/>
             <h1> User Page </h1>
-            < User/>
+            < User initialReduxState={initialReduxState}/>
         </>
     );
 };

@@ -4,11 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 // Actions
 import { userActions } from "../bus/user/actions";
 
-export const User = () => {
-    const dispatch = useDispatch()
+export const User = ({initialReduxState}) => {
+    const initialViewsPage = initialReduxState.user;
+    const dispatch = useDispatch();
+
+    dispatch(userActions.fillUser(initialViewsPage.userId));
+    dispatch(userActions.setVisitCounts(initialViewsPage.visitCounts));
+    dispatch(userActions.setUserType(initialViewsPage.userType));
+
     const { user } = useSelector((state) => state);
-
-
 
     const upgradeStatus = () => {
         const userType =  user.userType === 'Guest' ? 'Friend' : 'familyMember';
@@ -19,7 +23,6 @@ export const User = () => {
 
     const userTypeJSX = user && <p>Welcome, {user.userType}</p>;
 
-    //views
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (

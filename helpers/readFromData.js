@@ -1,5 +1,5 @@
 import fs from "fs/promises";
 
-export const readFromData = (path) => {
-    return fs.readFile(path, 'utf-8');
+export const readFromData = async(path) => {
+    return await fs.readFile(path, 'utf-8');
 }
