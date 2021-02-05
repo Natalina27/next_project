@@ -16,12 +16,12 @@ export const getServerSideProps = async (context) => {
     }
 }
 
-const UserPage = ({initialReduxState}) => {
+const UserPage = () => {
     return (
         <>
             <Menu/>
             <h1> User Page </h1>
-            < User initialReduxState={initialReduxState}/>
+            < User />
         </>
     );
 };
