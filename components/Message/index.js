@@ -2,7 +2,7 @@
 import { useSelector} from 'react-redux';
 
 //Other
-import {defineUserType} from "../helpers/defineUserType";
+import {defineUserType} from "../../helpers/defineUserType";
 
 export const Message = () => {
 

@@ -1,15 +1,17 @@
+import { types } from './types';
 
-// const initialState = {
-//
-// };
-//
-// export const userReducer = (
-//     state = initialState,
-//     { type, payload }
-// ) => {
-//     switch (type) {
-//
-//         default:
-//             return state;
-//     }
-// };
+const initialState = [];
+
+export const newsReducer = (
+    state = initialState, action
+) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case types.FILL_NEWS:
+            return payload;
+
+        default:
+            return state;
+    }
+};

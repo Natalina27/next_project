@@ -1,14 +1,16 @@
-// const initialState = {
-//
-// };
-//
-// export const userReducer = (
-//     // state = initialState,
-    // { type, payload }
-// ) => {
-//     switch (type) {
-//
-//         default:
-//             return state;
-//     }
-//};
+import { types } from './types';
+
+const initialState = [];
+
+export const carsReducer = (
+    state = initialState, action
+) => {
+    const { type, payload } = action;
+    switch (type) {
+        case types.FILL_CARS:
+            return payload;
+
+        default:
+            return state;
+    }
+};

@@ -2,26 +2,27 @@
 import React from "react";
 
 //Components
-import {News} from "../components/news";
-import {Discounts} from "../components/discounts";
-import {Cars} from "../components/cars";
-import {Menu} from "../components/Menu/menu";
+import { Menu } from "../components/Menu";
 
 //Actions
-import {userActions} from "../bus/user/actions";
+import { userActions } from "../bus/user/actions";
 
 //Other
-import {analyzeCookies} from "../helpers/analyzeCookies";
-import {readFromData} from "../helpers/readFromData";
-import {writeIntoData} from "../helpers/writeIntoData";
-import {defineUserType} from "../helpers/defineUserType";
-import {initialDispatcher} from "../init/initialDispatcher";
-import {initializeStore} from "../init/store";
-import {countUserVisits} from "../helpers/countUserVisits";
-import {getUserFromSelector} from "../helpers/getUserFromSelector";
+import { analyzeCookies } from "../helpers/analyzeCookies";
+import { readFromData } from "../helpers/readFromData";
+import { writeIntoData } from "../helpers/writeIntoData";
+import { defineUserType } from "../helpers/defineUserType";
+import { initialDispatcher } from "../init/initialDispatcher";
+import { initializeStore } from "../init/store";
+import { countUserVisits } from "../helpers/countUserVisits";
+import { getUserFromSelector } from "../helpers/getUserFromSelector";
+import {News} from "../components/News";
+import {Discounts} from "../components/Discounts";
+import {Cars} from "../components/Cars";
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
+
     const {userId} = await analyzeCookies(context);
 
     let str = '';
@@ -104,7 +105,7 @@ const DashboardPage = (props) => {
 
     return (
         <div>
-            <Menu/>
+            <Menu />
             {visitorJSX}
             {friendJSX}
             {familyJSX}

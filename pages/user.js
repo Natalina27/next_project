@@ -1,6 +1,6 @@
 //Components
-import {User} from "../components/user";
-import {Menu} from "../components/Menu/menu";
+import {Menu} from "../components/Menu";
+import {User} from "../components/User";
 
 //Other
 import {getInitialReduxState} from "../helpers/getInitialReduxstate";
@@ -21,7 +21,7 @@ const UserPage = () => {
         <>
             <Menu/>
             <h1> User Page </h1>
-            < User />
+            <User />
         </>
     );
 };

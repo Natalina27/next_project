@@ -1,15 +1,17 @@
-//
-// const initialState = {
-//
-// };
-//
-// export const userReducer = (
-//     state = initialState,
-//     { type, payload }
-// ) => {
-//     switch (type) {
-//
-//         default:
-//             return state;
-//     }
-//};
+import { types } from './types';
+
+const initialState = [];
+
+export const discountsReducer = (
+    state = initialState, action
+) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case types.FILL_DISCOUNTS:
+            return payload;
+
+        default:
+            return state;
+    }
+};

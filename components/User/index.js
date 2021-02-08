@@ -2,7 +2,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 
 // Actions
-import { userActions } from "../bus/user/actions";
+import { userActions } from "../../bus/user/actions";
 
 export const User =  () => {
     const { user } = useSelector((state) => state);

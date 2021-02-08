@@ -1,6 +1,6 @@
 //Components
-import {Menu} from "../components/Menu/menu";
-import {Message} from "../components/message";
+import {Menu} from "../components/Menu";
+import {Message} from "../components/Message";
 
 //Other
 import {getInitialReduxState} from "../helpers/getInitialReduxstate";
@@ -29,9 +29,9 @@ const HomePage = (props) => {
 
     return (
         <>
-            <Menu/>
+            <Menu />
             <h1> Home</h1>
-            <Message/>
+            <Message />
             {viewsJSX}
         </>
     );

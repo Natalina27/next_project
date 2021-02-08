@@ -3,7 +3,7 @@ import React from 'react';
 import Link from "next/link";
 
 //Styles
-import Styles from './styles.module.css';
+import Styles from './styles.module.scss';
 
 export const Menu = () => {
     return (
