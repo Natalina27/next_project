@@ -1,4 +1,4 @@
-export const types = {
-    FILL_CARS: 'FILL_CARS',
-};
+export const types = Object.freeze({
+        FILL_CARS: 'FILL_CARS',
+});
 

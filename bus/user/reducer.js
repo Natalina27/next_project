@@ -1,7 +1,7 @@
-import { types } from "./types";
+import { types } from './types';
 
 const initialState = {
-    userId: 'UserId',
+    userId: null,
     visitCounts: 0,
     userType: 'Guest'
 };

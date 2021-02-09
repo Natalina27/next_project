@@ -1,6 +1,8 @@
 import { types } from './types';
 
-const initialState = [];
+const initialState = {
+    newsData: null
+};
 
 export const newsReducer = (
     state = initialState, action
@@ -9,7 +11,7 @@ export const newsReducer = (
 
     switch (type) {
         case types.FILL_NEWS:
-            return payload;
+            return  payload;
 
         default:
             return state;

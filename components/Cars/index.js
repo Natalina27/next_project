@@ -1,11 +1,32 @@
-import React from "react";
+//Core
+import React from 'react';
+import {useSelector} from 'react-redux';
+import Link from 'next/link';
 
-export const Cars = ({carsData}) => {
-    const carsDataJSX = carsData.map(item => <li key={item.id}>{item.content}{item.dateOfReceiving}</li>);
+//Components
+import {Car} from '../Car';
+
+//Styles
+import Styles from '../Cars/styles.module.scss';
+
+export const Cars = ({title}) => {
+    const carsData = useSelector((state) => state.cars);
+
+    const carsDataJSX = carsData.map(item => <Car
+        key={item.id}
+        id={item.id}
+        content={item.content}
+        dateOfReceiving={item.dateOfReceiving}
+    />);
+
     return (
-        <div>
-          <h1> Cars page</h1>
-          <ul>{carsDataJSX}</ul>
+        <div className={Styles.container}>
+            <Link href='/cars'>
+                <h2>
+                    <a>{ title }</a>
+                </h2>
+            </Link>
+            {carsDataJSX}
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import {userActions} from "../bus/user/actions";
+import {userActions} from '../bus/user';
 import {analyzeCookies} from "../helpers/analyzeCookies";
 import {readFromData} from "../helpers/readFromData";
 import {defineUserType} from "../helpers/defineUserType";
@@ -17,11 +17,9 @@ export const initialDispatcher = async (
     const { visitCounts } = user || 1;
     const  userType  = defineUserType(visitCounts);
 
-    store.dispatch(
-        userActions.fillUser(userId),
-        userActions.setVisitCounts(visitCounts),
-        userActions.setUserType(userType)
-    );
+    store.dispatch(userActions.fillUser(userId));
+    store.dispatch(userActions.setVisitCounts(visitCounts));
+    store.dispatch(userActions.setUserType(userType));
 
     return store;
 }

@@ -1,16 +1,19 @@
 import { types } from './types';
 
-const initialState = [];
+const initialState = {
+    carsData: null
+};
 
 export const carsReducer = (
-    state = initialState, action
+    state = initialState,
+    action
 ) => {
     const { type, payload } = action;
+
     switch (type) {
         case types.FILL_CARS:
-            return payload;
-
-        default:
+            return  payload;
+       default:
             return state;
     }
 };

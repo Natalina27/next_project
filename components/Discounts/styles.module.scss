@@ -1,0 +1,38 @@
+div.container {
+  & > h2 {
+    display: inline-block;
+    font-size: 48px;
+    color: #fff;
+  }
+
+  & div {
+    margin-bottom: 30px;
+
+    & p {
+      font-size: 24px;
+      margin: 0 0 12px;
+      color: #fff;
+    }
+
+    & p:first-child {
+      font-size: 32px;
+      font-weight: 500;
+    }
+  }
+
+  & > div:last-child {
+    margin-bottom: 60px;
+  }
+
+  & a {
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+    transition: color 200ms, border-color 200ms;
+
+    &:hover {
+      transition: color 200ms, border-color 200ms;
+      border-color: #83a3ff;
+      color: #83a3ff;
+    }
+  }
+}

@@ -1,30 +1,14 @@
 //Components
-import {Menu} from "../components/Menu";
-import {Message} from "../components/Message";
+import { Menu, Message } from '../components';
 
 //Other
-import {getInitialReduxState} from "../helpers/getInitialReduxstate";
-import {getUserFromSelector} from "../helpers/getUserFromSelector";
-
-export const getServerSideProps = async (context) => {
-
-    const initialReduxState = await getInitialReduxState(context);
-    console.log('initialReduxState', initialReduxState);
-
-    return {
-        props: {
-            initialReduxState,
-        }
-    }
-}
+import {getInitialReduxState} from '../helpers/getInitialReduxstate';
+import {getUserFromSelector} from '../helpers/getUserFromSelector';
 
 const HomePage = (props) => {
-    const {
-        initialReduxState
-    } = props;
+    const { initialReduxState } = props;
 
     const user = getUserFromSelector(initialReduxState);
-    console.log(' index user', user);
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (
@@ -36,5 +20,16 @@ const HomePage = (props) => {
         </>
     );
 };
+
+export const getServerSideProps = async (context) => {
+
+    const initialReduxState = await getInitialReduxState(context);
+
+    return {
+        props: {
+            initialReduxState,
+        }
+    }
+}
 
 export default HomePage;

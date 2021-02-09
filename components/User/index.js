@@ -2,7 +2,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 
 // Actions
-import { userActions } from "../../bus/user/actions";
+import { userActions } from '../../bus/user';
 
 export const User =  () => {
     const { user } = useSelector((state) => state);
@@ -21,7 +21,9 @@ export const User =  () => {
 
     return (
         <>
-            <button onClick={ upgradeStatus }>Временно повысить свой статус</button>
+            <button
+                onClick={ upgradeStatus }
+                disabled={user.userType === 'familyMember'}>Временно повысить свой статус</button>
             {userIdJSX}
             {userTypeJSX}
             {viewsJSX}

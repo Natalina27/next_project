@@ -1,6 +1,8 @@
 import { types } from './types';
 
-const initialState = [];
+const initialState = {
+    discountsData: null
+};
 
 export const discountsReducer = (
     state = initialState, action
@@ -9,7 +11,7 @@ export const discountsReducer = (
 
     switch (type) {
         case types.FILL_DISCOUNTS:
-            return payload;
+            return   payload;
 
         default:
             return state;

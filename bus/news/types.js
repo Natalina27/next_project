@@ -1,3 +1,3 @@
-export const types = {
-    FILL_NEWS: 'FILL_NEWS',
-};
+export const types = Object.freeze({
+        FILL_NEWS: 'FILL_NEWS',
+    });
