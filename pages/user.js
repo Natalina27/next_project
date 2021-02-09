@@ -1,10 +1,14 @@
 //Components
+import { useUser } from '../bus/user';
 import {Menu, User } from '../components';
+import { initialDispatcher } from '../init/initialDispatcher';
+import { initializeStore } from '../init/store';
 
 //Other
-import {getInitialReduxState} from '../helpers/getInitialReduxstate';
 
 const UserPage = () => {
+    // const user = useUser()
+    // console.log(user)
     return (
         <>
             <Menu/>
@@ -15,12 +19,11 @@ const UserPage = () => {
 };
 
 export const getServerSideProps = async (context) => {
-
-   const initialReduxState = await getInitialReduxState(context);
+   const store = await initialDispatcher(context, initializeStore());
 
    return {
         props: {
-            initialReduxState,
+            initialReduxState: store.getState(),
         }
     }
 }

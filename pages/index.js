@@ -1,33 +1,33 @@
+import { useSelector } from "react-redux";
+import { useUser } from "../bus/user";
 //Components
 import { Menu, Message } from '../components';
 
 //Other
-import {getInitialReduxState} from '../helpers/getInitialReduxstate';
-import {getUserFromSelector} from '../helpers/getUserFromSelector';
+import { initialDispatcher } from "../init/initialDispatcher";
+import { initializeStore } from "../init/store";
 
-const HomePage = (props) => {
-    const { initialReduxState } = props;
-
-    const user = getUserFromSelector(initialReduxState);
-    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
+const HomePage = () => {
+    const user = useUser()
+    useSelector(state => console.log(1, state))
+    const userJSX = user && <p>Views: {user.visitCounts}</p>
 
     return (
         <>
             <Menu />
             <h1> Home</h1>
             <Message />
-            {viewsJSX}
+            {userJSX}
         </>
     );
 };
 
 export const getServerSideProps = async (context) => {
-
-    const initialReduxState = await getInitialReduxState(context);
+    const store = await initialDispatcher(context, initializeStore());
 
     return {
         props: {
-            initialReduxState,
+            initialReduxState: store.getState(),
         }
     }
 }

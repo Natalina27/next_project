@@ -17,7 +17,7 @@ export const User =  () => {
 
     const userTypeJSX = user && <p>Welcome, {user.userType}</p>;
 
-    const viewsJSX = user && <p>Views: {user.visitCounts + 1}</p>;
+    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (
         <>
