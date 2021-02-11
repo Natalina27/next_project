@@ -1,8 +1,6 @@
 import { types } from './types';
 
-const initialState = {
-    carsData: null
-};
+const initialState = [];
 
 export const carsReducer = (
     state = initialState,

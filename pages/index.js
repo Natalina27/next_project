@@ -2,13 +2,12 @@
 import { Menu, Message } from '../components';
 
 //Other
-import {getInitialReduxState} from '../helpers/getInitialReduxstate';
-import {getUserFromSelector} from '../helpers/getUserFromSelector';
+import {useUser} from "../bus/user";
+import {initialDispatcher} from "../init/initialDispatcher";
+import {initializeStore} from '../init/store';
 
-const HomePage = (props) => {
-    const { initialReduxState } = props;
-
-    const user = getUserFromSelector(initialReduxState);
+const HomePage = () => {
+    const  user = useUser();
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (
@@ -23,11 +22,11 @@ const HomePage = (props) => {
 
 export const getServerSideProps = async (context) => {
 
-    const initialReduxState = await getInitialReduxState(context);
+    const store = await initialDispatcher(context, initializeStore());
 
     return {
         props: {
-            initialReduxState,
+            initialReduxState: store.getState(),
         }
     }
 }

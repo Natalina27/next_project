@@ -1,23 +1,24 @@
 //Core
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
+
+//Components
+import { Discount } from '../Discount';
 
 //Styles
 import Styles from './styles.module.scss';
-import {useSelector} from "react-redux";
-import {Discount} from "../Discount";
 
 export const Discounts = ({title}) => {
-    const discountsData = useSelector((state) => state.discount);
+    const discountsData = useSelector((state) => state.discounts);
 
-    const discountsDataJSX = discountsData.map(item => {
-        return(
-            <Discount
+    const discountsDataJSX = discountsData.map(item => <Discount
                 key={item.id}
                 id={item.content}
+                content={item.content}
                 dateOfReceiving={item.dateOfReceiving}
             />);
-    });
+
     return (
         <div className={Styles.container}>
             <Link href='/discounts'>

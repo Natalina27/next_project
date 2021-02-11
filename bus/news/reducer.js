@@ -1,8 +1,6 @@
 import { types } from './types';
 
-const initialState = {
-    newsData: null
-};
+const initialState = [];
 
 export const newsReducer = (
     state = initialState, action

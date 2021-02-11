@@ -8,7 +8,6 @@ import {Cars, Menu} from '../../components';
 import {carsActions} from '../../bus/cars';
 
 //Others
-import {getInitialReduxState} from "../../helpers/getInitialReduxstate";
 import {initialDispatcher} from "../../init/initialDispatcher";
 import {initializeStore} from "../../init/store";
 
@@ -16,14 +15,13 @@ const CarsPage = () => {
     return (
         <>
           <Menu />
-          <Cars title= "🏎 Тачки" />
+          <Cars title= "🏎 Cars" />
         </>
     );
 };
 
 export const getServerSideProps = async (context) => {
-    const store = await initialDispatcher(context, initializeStore());
-    const initialReduxState  = getInitialReduxState(context);
+    const initialReduxState = await initialDispatcher(context, initializeStore());
     const { carsData } = initialReduxState;
     store.dispatch(carsActions.fillCars(carsData));
 

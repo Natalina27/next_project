@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import moment from "moment";
+import fs from 'fs/promises';
+import moment from 'moment';
 
 export const writeIntoData = async(path, data) => {
         const updatedData = data.map((item) => {

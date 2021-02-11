@@ -78,7 +78,7 @@ export const getServerSideProps = async (context) => {
     store.dispatch(discountsActions.fillDiscounts(discountsData));
     store.dispatch(newsActions.fillNews(newsData));
     const initialReduxState = store.getState();
-    console.log('initialReduxState', initialReduxState);
+
 
     return {
         props: {
@@ -91,22 +91,5 @@ export const getServerSideProps = async (context) => {
         }
     }
 }
-
-
-// export const getServerSideProps = async (context) => {
-//     const initialReduxState = await getInitialReduxState(context);
-//     //const { newsData, discountsData, carsData } = initialReduxState;
-//     console.log('initialReduxState', initialReduxState);
-//     return {
-//         props: {
-//             initialReduxState: {
-//                 ...initialReduxState,
-//                 //  cars: carsData,
-//                 // discounts: discountsData,
-//                 // news: newsData
-//             }
-//         },
-//     };
-// }
 
 export default DashboardPage;

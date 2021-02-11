@@ -1,14 +1,17 @@
+//Actions
+import {userActions} from '../bus/user';
+
+//Others
 import {initialDispatcher} from '../init/initialDispatcher';
 import {initializeStore} from '../init/store';
 import {analyzeCookies} from './analyzeCookies';
 import {countUserVisits} from './countUserVisits';
 import {defineUserType} from './defineUserType';
-import {userActions} from '../bus/user';
 
-export const getInitialReduxState  = async(context) => {
+export const getInitialReduxState  = async (context) => {
 
     const store = await initialDispatcher(context, initializeStore());
-    const {userId} = await analyzeCookies(context);
+    const { userId } = await analyzeCookies(context);
     const visitCounts = await countUserVisits(userId);
     const userType = defineUserType(visitCounts);
 

@@ -1,13 +1,13 @@
-.container {
-  & h1 {
+div.container {
+  & > h2 {
     font-size: 48px;
-    color: #fff;
+    color: #000;
   }
 
   & p {
     font-size: 24px;
     margin: 0 0 12px;
-    color: #fff;
+    color: #000;
 
     & span {
       color: #f54251;
@@ -18,20 +18,36 @@
   & button {
     cursor: pointer;
     background-color: transparent;
-    color: #fff;
+    color: #000;
     border: 3px solid currentColor;
     border-radius: 3px;
     font-size: 24px;
     padding: 8px;
     transition: color 0.1s ease;
 
-    &:hover {
-      color: #83a3ff;
+    &a {
+      cursor: pointer;
+      transition: color 200ms, border-color 200ms;
+
+      &:hover {
+        color: #83a3ff;
+      }
     }
 
     &:disabled {
       cursor: not-allowed;
-      color: darken(#fff, 40);
+      color: darken(#000, 40);
+    }
+  }
+
+  & a {
+    cursor: pointer;
+    transition: color 200ms, border-color 200ms;
+
+    &:hover {
+      transition: color 200ms, border-color 200ms;
+      border-color: #83a3ff;
+      color: #83a3ff;
     }
   }
 }
