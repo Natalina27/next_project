@@ -9,7 +9,7 @@ export const discountsReducer = (
 
     switch (type) {
         case types.FILL_DISCOUNTS:
-            return   payload;
+            return payload;
 
         default:
             return state;

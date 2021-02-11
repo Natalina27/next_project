@@ -21,7 +21,7 @@ export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
     const initialReduxState = store.getState();
     console.log('D initialReduxState', initialReduxState);
-    const { discountsData } =  await initialReduxState.user;
+    const { discountsData } =  await initialReduxState.discounts;
     store.dispatch(discountsActions.fillDiscounts(discountsData));
     return {
         props: {

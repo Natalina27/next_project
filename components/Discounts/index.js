@@ -12,11 +12,11 @@ import Styles from './styles.module.scss';
 export const Discounts = ({title}) => {
     const discountsData = useSelector((state) => state.discounts);
 
-    const discountsDataJSX = discountsData.map(item => <Discount
-                key={item.id}
-                id={item.content}
-                content={item.content}
-                dateOfReceiving={item.dateOfReceiving}
+    const discountsDataJSX = discountsData.map(({ id, content, dateOfReceiving }) => <Discount
+                key={id}
+                id={id}
+                content={content}
+                dateOfReceiving={dateOfReceiving}
             />);
 
     return (

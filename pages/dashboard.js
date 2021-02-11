@@ -5,7 +5,7 @@ import React from 'react';
 import { Menu, News, Discounts, Cars } from '../components';
 
 //Actions
-import {userActions} from '../bus/user';
+import {userActions, useUser} from '../bus/user';
 import {carsActions} from '../bus/cars';
 import {discountsActions} from '../bus/discounts';
 import {newsActions} from '../bus/news';
@@ -24,12 +24,17 @@ const DashboardPage = (
 ) => {
     const { news, discounts, cars } = initialReduxState;
     console.log('initialReduxState', initialReduxState);
+
+    const  user = useUser();
+    const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
+
     return (
         <>
             <Menu />
             { news && <News title = '🗞 News' /> }
             { discounts  && <Discounts title="📉 Discounts" /> }
             { cars &&  <Cars title = '🏎 Cars' /> }
+            {viewsJSX}
         </>
     );
 };
