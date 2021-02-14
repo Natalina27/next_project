@@ -26,11 +26,10 @@ const HomePage = () => {
 export const getServerSideProps = async (context) => {
 
     const store = await initialDispatcher(context, initializeStore());
+    const initialReduxState = store.getState();
 
     return {
-        props: {
-            initialReduxState: store.getState(),
-        }
+        props: {initialReduxState}
     }
 }
 
