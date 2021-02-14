@@ -8,6 +8,4 @@ export const countUserVisits = async (user) => {
     await writeUsers(updatedUsers);
     const { visitCounts } = updatedUser;
     return visitCounts;
-
-
 }

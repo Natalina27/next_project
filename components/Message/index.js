@@ -2,13 +2,12 @@
 import { useSelector} from 'react-redux';
 
 //Other
-import {defineUserType} from "../../helpers/defineUserType";
+import {selectUser} from "../../bus/user";
 
 export const Message = () => {
 
-    const { user } = useSelector((state) => state);
-    const { visitCounts } = user;
-    const userType = defineUserType(visitCounts);
+    const  user  = useSelector(selectUser);
+    const { userType } = user;
 
     const isVisitor = userType === 'Guest';
     const isFriend = userType === 'Friend';

@@ -1,13 +1,16 @@
+//Core
+import {useSelector} from 'react-redux';
+
 //Components
 import { Menu, Message } from '../components';
 
 //Other
-import {useUser} from "../bus/user";
 import {initialDispatcher} from "../init/initialDispatcher";
 import {initializeStore} from '../init/store';
+import {selectUser} from '../bus/user';
 
 const HomePage = () => {
-    const  user = useUser();
+    const  user = useSelector(selectUser);
     const viewsJSX = user && <p>Views: {user.visitCounts}</p>;
 
     return (

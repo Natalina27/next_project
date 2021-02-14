@@ -1,5 +1,2 @@
-import { useSelector } from 'react-redux';
+export const selectUser = (state) => state.user;
 
-export const useUser = () => {
-    return useSelector((state) => state.user);
-}

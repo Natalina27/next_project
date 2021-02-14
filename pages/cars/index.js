@@ -1,6 +1,3 @@
-//Core
-import React from 'react';
-
 //Components
 import {Cars, Menu} from '../../components';
 
@@ -8,8 +5,9 @@ import {Cars, Menu} from '../../components';
 import {carsActions} from '../../bus/cars';
 
 //Others
-import {initialDispatcher} from "../../init/initialDispatcher";
-import {initializeStore} from "../../init/store";
+import {initializeStore} from '../../init/store';
+import {initialDispatcher} from '../../init/initialDispatcher';
+import {getInitialReduxState} from "../../helpers/getInitialReduxstate";
 
 const CarsPage = () => {
     return (
@@ -21,14 +19,13 @@ const CarsPage = () => {
 };
 
 export const getServerSideProps = async (context) => {
-    const initialReduxState = await initialDispatcher(context, initializeStore());
-    const { carsData } = initialReduxState;
-    store.dispatch(carsActions.fillCars(carsData));
+    const store = await initialDispatcher(context, initializeStore());
+    const initialReduxState = await getInitialReduxState(store);
+    store.dispatch(carsActions.fillCars(initialReduxState));
 
     return {
         props: {
             initialReduxState,
-            carsData,
         },
     };
 }
