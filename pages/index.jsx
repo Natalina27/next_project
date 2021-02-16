@@ -32,5 +32,5 @@ export const getServerSideProps = async (context) => {
         props: {initialReduxState}
     }
 }
-
+// TODO: rename all necess js to jsx
 export default HomePage;

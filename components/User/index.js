@@ -2,10 +2,10 @@
 import {useDispatch, useSelector} from 'react-redux';
 
 // Actions
-import { userActions } from '../../bus/user';
+import {selectUser, userActions} from '../../bus/user';
 
 export const User =  () => {
-    const { user } = useSelector((state) => state);
+    const  user = useSelector(selectUser);
     const dispatch = useDispatch();
 
     const upgradeStatus = () => {

@@ -1,8 +1,8 @@
-import {readUsers} from './readUsers';
+import {readUser} from './readData';
 import {writeUsers} from './writeUsers';
 
 export const  findOrCreateUser = async(userId) => {
-    const users = await readUsers();
+    const users = await readUser();
     const user = users.find((user) => user.userId === userId);
 
     if (!user) {
