@@ -23,7 +23,9 @@ export const User =  () => {
         <>
             <button
                 onClick={ upgradeStatus }
-                disabled={user.userType === 'familyMember'}>Временно повысить свой статус</button>
+                disabled={user.userType === 'familyMember'}>
+                Временно повысить свой статус
+            </button>
             {userIdJSX}
             {userTypeJSX}
             {viewsJSX}

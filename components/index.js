@@ -8,3 +8,4 @@ export { Custom404 } from './Custom404';
 export { Message } from './Message';
 export { Menu } from './Menu';
 export { User } from './User';
+export { Back } from './Back';

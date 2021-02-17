@@ -2,7 +2,7 @@
 import { useSelector} from 'react-redux';
 
 //Other
-import {selectUser} from "../../bus/user";
+import {selectUser} from '../../bus/user';
 
 export const Message = () => {
 

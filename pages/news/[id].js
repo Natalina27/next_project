@@ -1,43 +1,48 @@
 // Core
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 // Components
-import { Menu, Article } from '../../components';
+import { Menu, Article, Back } from '../../components';
 
 // Actions
-import {newsActions} from '../../bus/news';
+import { newsActions, selectNews } from '../../bus/news';
 
 // Other
 import { initializeStore } from '../../init/store';
 import { initialDispatcher } from '../../init/initialDispatcher';
+import { readNews } from '../../helpers/readData';
 
-const ArticleByIdPage = ({ initialReduxState: { news = [] } }) => {
+const ArticleByIdPage = () => {
+    const news = useSelector(selectNews);
     const router = useRouter();
     const { id } = router.query;
     const article = news.find((item) => item.id === id);
+    const { content, dateOfReceiving } = article;
 
     return (
         <>
             <Menu />
-            { article && <Article single { ...article } /> }
+            <Article id={id}
+                     content={content}
+                     dateOfReceiving={dateOfReceiving}
+                     />
+            <Back />
         </>
     );
 };
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
+    const  newsData  = await readNews();
+    store.dispatch(newsActions.fillNews(newsData));
     const initialReduxState = store.getState();
-    const { newsData } = initialReduxState;
-    store.dispatch(newsActions.fillCars(newsData));
 
     return {
         props: {
-            initialReduxState: {
-                news: newsData,
-            },
+            initialReduxState
         },
     };
 };
-
 
 export default ArticleByIdPage;

@@ -1,9 +1,16 @@
+//Core
 import React from 'react';
-import {Menu, News} from '../../components';
-import {initialDispatcher} from '../../init/initialDispatcher';
-import {newsActions} from '../../bus/news';
-import {initializeStore} from '../../init/store';
-import {readFromData} from "../../helpers/readFromData";
+
+//Components
+import { Menu, News } from '../../components';
+
+//Actions
+import { newsActions } from '../../bus/news';
+
+//Others
+import { initialDispatcher } from '../../init/initialDispatcher';
+import { initializeStore } from '../../init/store';
+import { readNews } from '../../helpers/readData';
 
 const NewsPage = () => {
     return (
@@ -16,10 +23,10 @@ const NewsPage = () => {
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
-    const newsSource = await readFromData(`./data/news.json`);
-    const newsData =  JSON.parse(newsSource);
+    const newsData =  await readNews();
     store.dispatch(newsActions.fillNews(newsData));
     const initialReduxState = store.getState();
+
     return {
         props: {
             initialReduxState,

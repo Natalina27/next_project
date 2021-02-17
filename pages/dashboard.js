@@ -1,14 +1,24 @@
-import {initialDispatcher} from "../init/initialDispatcher";
-import {initializeStore} from "../init/store";
-import {Cars, Discounts, Menu, News} from "../components";
-import {useSelector} from "react-redux";
-import {selectUser} from "../bus/user";
-import React from "react";
-import {readCars, readDiscounts, readNews} from "../helpers/readData";
-import {carsActions} from "../bus/cars";
-import {discountsActions} from "../bus/discounts";
-import {newsActions} from "../bus/news";
+//Core
+import React from 'react';
+import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
+//Components
+import { Menu } from '../components';
+
+//Actions
+import { carsActions } from '../bus/cars';
+import { discountsActions } from '../bus/discounts';
+import { newsActions } from '../bus/news';
+
+//Styles
+import Styles from "../components/Menu/styles.module.scss";
+
+//Others
+import { initialDispatcher } from '../init/initialDispatcher';
+import { initializeStore } from '../init/store';
+import { selectUser } from '../bus/user';
+import { readCars, readDiscounts, readNews } from '../helpers/readData';
 
 const Dashboard = () => {
     const  user = useSelector(selectUser);
@@ -18,18 +28,26 @@ const Dashboard = () => {
     const isFriend = userType === 'Friend';
     const isFamily = userType === 'familyMember';
 
-    const visitorJSX = (isVisitor || isFriend ||  isFamily)  && <News title= "🗞 News" />;
-    const friendJSX = (isFriend || isFamily) &&  <Discounts title='📉 Discounts' />;
-    const familyJSX = isFamily && <Cars title= "🏎 Cars" />;
+    const visitorJSX = (isVisitor || isFriend ||  isFamily)  &&  '🗞 News' ;
+    const friendJSX = (isFriend || isFamily) &&  '📉 Discounts';
+    const familyJSX = isFamily && '🏎 Cars' ;
     const viewsJSX = user && <p>Views: {visitCounts}</p>;
 
 
     return (
         <div>
             <Menu />
-            {visitorJSX}
-            {friendJSX}
-            {familyJSX}
+            <nav className={Styles.dashboard}>
+                <Link href={'/news'}>
+                    <a> { visitorJSX } </a>
+                </Link>
+                <Link href={'/discounts'}>
+                    <a > { friendJSX }</a>
+                </Link>
+                <Link href={'/cars'}>
+                    <a > { familyJSX } </a>
+                </Link>
+            </nav>
             {viewsJSX}
         </div>
     );

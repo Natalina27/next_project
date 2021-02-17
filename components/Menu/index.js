@@ -1,24 +1,24 @@
 //Core
 import React from 'react';
-import Link from "next/link";
+import Link from 'next/link';
 
 //Styles
 import Styles from './styles.module.scss';
 
 export const Menu = () => {
     return (
-        <div className={Styles.menu}>
-            <nav>
-                <Link href="/">
-                    <a className={Styles.link}> Home  |</a>
+        < >
+            <nav className={Styles.menu}>
+                <Link href={'/'}>
+                    <a > Home  | </a>
                 </Link>
-                <Link href={"/user"}>
-                    <a className={Styles.link}> User  |</a>
+                <Link href={'/user'}>
+                    <a >  User  | </a>
                 </Link>
-                <Link href={"/dashboard"}>
-                    <a className={Styles.link}> Dashboard </a>
+                <Link href={'/dashboard'}>
+                    <a>  Dashboard </a>
                 </Link>
             </nav>
-        </div>
+        </>
     );
 };

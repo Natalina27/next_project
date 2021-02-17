@@ -7,7 +7,7 @@ import {discountsActions} from '../../bus/discounts';
 //Others
 import {initialDispatcher} from '../../init/initialDispatcher';
 import {initializeStore} from '../../init/store';
-import {readFromData} from "../../helpers/readFromData";
+import {readDiscounts} from "../../helpers/readData";
 
 const DiscountsPage = () => {
     return (
@@ -20,16 +20,15 @@ const DiscountsPage = () => {
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
-    const discountsSource = await readFromData(`./data/discounts.json`);
-    const discountsData =  JSON.parse(discountsSource);
+    const discountsData =  await readDiscounts();
     store.dispatch(discountsActions.fillDiscounts(discountsData));
     const initialReduxState = store.getState();
+
     return {
         props: {
             initialReduxState,
         },
     };
 };
-
 
 export default DiscountsPage;

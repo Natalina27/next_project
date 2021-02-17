@@ -1,22 +1,11 @@
-// Core
-import Link from 'next/link';
-
-// Components
-import { Back } from '../Back';
-
 // Styles
 import Styles from './styles.module.scss';
 
-export const Article = ({ single, id, content, dateOfReceiving }) => {
+export const Article = ({ content, dateOfReceiving }) => {
     return (
         <div className={Styles.container}>
-            <Link href={`/news/${id}`}>
-                <p>
-                    <a>{content}</a>
-                </p>
-            </Link>
+                <p>{content }</p>
             <p>Published: {dateOfReceiving}</p>
-            {single && <Back />}
         </div>
     );
 };

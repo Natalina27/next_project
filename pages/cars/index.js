@@ -7,7 +7,7 @@ import {carsActions} from '../../bus/cars';
 //Others
 import {initializeStore} from '../../init/store';
 import {initialDispatcher} from '../../init/initialDispatcher';
-import {getInitialReduxState} from "../../helpers/getInitialReduxstate";
+import {readCars} from '../../helpers/readData';
 
 const CarsPage = () => {
     return (
@@ -20,8 +20,9 @@ const CarsPage = () => {
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
-    const initialReduxState = await getInitialReduxState(store);
-    store.dispatch(carsActions.fillCars(initialReduxState));
+    const carsData =  await readCars();
+    store.dispatch(carsActions.fillCars(carsData));
+    const initialReduxState = store.getState();
 
     return {
         props: {

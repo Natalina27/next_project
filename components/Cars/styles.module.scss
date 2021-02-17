@@ -36,12 +36,17 @@ div.container {
   }
 
   & a {
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
+    color: steelblue;
+    font-size: 27px;
+    margin: 10px;
     transition: color 200ms, border-color 200ms;
+    text-decoration: none;
 
     &:hover {
       transition: color 200ms, border-color 200ms;
-      border-color: #83a3ff;
       color: #83a3ff;
     }
   }

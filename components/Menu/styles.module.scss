@@ -2,10 +2,39 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
-}
-.link{
-    text-decoration: none;
-    color: dimgray;
     font-size: 27px;
+
+    & a {
+        text-decoration: none;
+        color: dimgray;
+        transition: color 200ms, border-color 200ms;
+        margin: 10px;
+
+        &:hover {
+            transition: color 200ms, border-color 200ms;
+            border-color: #83a3ff;
+            color: #83a3ff;
+        }
+        }
+}
+
+
+.dashboard{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 77px;
+
+    & a{
+        text-decoration: none;
+        color: dimgray;
+        transition: color 200ms, border-color 200ms;
+
+        &:hover {
+            transition: color 200ms, border-color 200ms;
+            border-color: #83a3ff;
+            color: #83a3ff;
+        }
+    }
 }
 

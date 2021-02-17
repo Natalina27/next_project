@@ -1,43 +1,48 @@
 // Core
 import { useRouter } from 'next/router';
+import {useSelector} from 'react-redux';
 
 // Components
-import { Menu, Discount } from '../../components';
+import { Menu, Discount, Back } from '../../components';
 
-//Actions
-import { discountsActions } from '../../bus/discounts';
+// Actions
+import {discountsActions, selectDiscounts} from '../../bus/discounts';
 
 // Other
 import { initializeStore } from '../../init/store';
 import { initialDispatcher } from '../../init/initialDispatcher';
+import {readDiscounts} from '../../helpers/readData';
 
-const DiscountByIdPage = ({ initialReduxState: { discounts = [] } }) => {
+const DiscountByIdPage = () => {
+    const news = useSelector(selectDiscounts);
     const router = useRouter();
     const { id } = router.query;
-    const discount = discounts.find((item) => item.id === id);
+    const discount = news.find((item) => item.id === id);
+    const { content, dateOfReceiving } = discount;
 
     return (
         <>
             <Menu />
-            { discount && <Discount single { ...discount } /> }
+            <Discount id={id}
+                     content={content}
+                     dateOfReceiving={dateOfReceiving}
+            />
+            <Back />
         </>
     );
 };
 
 export const getServerSideProps = async (context) => {
     const store = await initialDispatcher(context, initializeStore());
-    const initialReduxState = store.getState();
-    const { discountsData } = initialReduxState;
+    const  discountsData  = await readDiscounts();
     store.dispatch(discountsActions.fillDiscounts(discountsData));
+    const initialReduxState = store.getState();
 
     return {
         props: {
-            initialReduxState: {
-                discounts: discountsData,
-            },
+            initialReduxState
         },
     };
 };
-
 
 export default DiscountByIdPage;

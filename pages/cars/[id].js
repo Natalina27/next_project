@@ -1,42 +1,48 @@
 // Core
 import { useRouter } from 'next/router';
+import {useSelector} from 'react-redux';
 
 // Components
-import { Menu, Car } from '../../components';
+import { Menu, Car, Back } from '../../components';
 
 //Actions
-import { carsActions } from '../../bus/cars';
+import { carsActions, selectCars } from '../../bus/cars';
 
 // Others
 import { initializeStore } from '../../init/store';
 import { initialDispatcher } from '../../init/initialDispatcher';
+import { readCars } from '../../helpers/readData';
 
-const CarByIdPage = ({ initialReduxState: { cars = [] } }) => {
+const CarByIdPage = () => {
+    const cars = useSelector(selectCars);
     const router = useRouter();
     const { id } = router.query;
     const car = cars.find((item) => item.id === id);
+    const { content, dateOfReceiving } = car;
 
     return (
         <>
             <Menu />
-            { car && <Car single { ...car } /> }
+            <Car id={id}
+                 content={content}
+                 dateOfReceiving={dateOfReceiving}
+            />
+            <Back />
         </>
     );
 };
 
 export const getServerSideProps = async (context) => {
-    const initialReduxState = await initialDispatcher(context, initializeStore());
-    const { carsData } = initialReduxState;
+    const store = await initialDispatcher(context, initializeStore());
+    const carsData = await readCars();
     store.dispatch(carsActions.fillCars(carsData));
+    const initialReduxState = store.getState();
 
     return {
         props: {
-            initialReduxState: {
-                cars: carsData,
-            },
+            initialReduxState,
         },
     };
 };
-
 
 export default CarByIdPage;

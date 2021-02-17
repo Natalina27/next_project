@@ -1,5 +1,5 @@
 import { readUser } from './readData';
-import { writeUsers } from './writeUsers';
+import { writeUsers } from './writeData';
 
 export const countUserVisits = async (user) => {
     const users = await readUser();

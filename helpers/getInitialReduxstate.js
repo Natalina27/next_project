@@ -19,6 +19,5 @@ export const getInitialReduxState  = async (context) => {
     store.dispatch(userActions.setVisitCounts(visitCounts));
     store.dispatch(userActions.setUserType(userType));
 
-
     return store.getState();
 }

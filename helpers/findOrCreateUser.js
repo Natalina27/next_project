@@ -1,5 +1,5 @@
 import {readUser} from './readData';
-import {writeUsers} from './writeUsers';
+import {writeUsers} from './writeData';
 
 export const  findOrCreateUser = async(userId) => {
     const users = await readUser();
